@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import styles from './page.module.css'; // CSS module for button styling
-import Navbar from '../components/navbar'; // <-- Import Navbar here
+import Navbar from '../components/navbar'; // adjust path if needed
+import styles from './page.module.css'; // your CSS module for buttons
 
 const inlineStyles = {
   main: {
@@ -54,7 +54,6 @@ const inlineStyles = {
   },
 };
 
-// Animated section component using framer-motion and intersection observer
 const AnimatedSection = ({ backgroundColor, children }) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -76,48 +75,49 @@ const AnimatedSection = ({ backgroundColor, children }) => {
 
 export default function HomePage() {
   return (
-    <main style={inlineStyles.main}>
-      <Navbar />  {/* <-- Added Navbar here */}
+    <>
+      <Navbar />
+      <main style={inlineStyles.main}>
+        <AnimatedSection backgroundColor="#f0f4ff">
+          <h1 style={inlineStyles.title}>📚 OtterlyFocused</h1>
+          <p style={inlineStyles.subtitle}>
+            Track your study time. Compete with friends. Improve your habits.
+          </p>
+          <Link href="/timer">
+            <button className={styles.button}>Start Timing</button>
+          </Link>
+        </AnimatedSection>
 
-      <AnimatedSection backgroundColor="#f0f4ff">
-        <h1 style={inlineStyles.title}>📚 OtterlyFocused</h1>
-        <p style={inlineStyles.subtitle}>
-          Track your study time. Compete with friends. Improve your habits.
-        </p>
-        <Link href="/timer">
-          <button className={styles.button}>Start Timing</button>
-        </Link>
-      </AnimatedSection>
+        <AnimatedSection backgroundColor="#e8f5e9">
+          <h2 style={inlineStyles.heading}>⏱ Study Timer</h2>
+          <p style={inlineStyles.text}>
+            Use our focused timer to manage Pomodoro sessions and stay productive.
+          </p>
+          <Link href="/timer">
+            <button className={styles.button}>Go to Timer</button>
+          </Link>
+        </AnimatedSection>
 
-      <AnimatedSection backgroundColor="#e8f5e9">
-        <h2 style={inlineStyles.heading}>⏱ Study Timer</h2>
-        <p style={inlineStyles.text}>
-          Use our focused timer to manage Pomodoro sessions and stay productive.
-        </p>
-        <Link href="/timer">
-          <button className={styles.button}>Go to Timer</button>
-        </Link>
-      </AnimatedSection>
+        <AnimatedSection backgroundColor="#fff8e1">
+          <h2 style={inlineStyles.heading}>🏆 Leaderboards</h2>
+          <p style={inlineStyles.text}>
+            See how you rank among friends and turn studying into a friendly competition.
+          </p>
+          <Link href="/leaderboards">
+            <button className={styles.button}>View Leaderboards</button>
+          </Link>
+        </AnimatedSection>
 
-      <AnimatedSection backgroundColor="#fff8e1">
-        <h2 style={inlineStyles.heading}>🏆 Leaderboards</h2>
-        <p style={inlineStyles.text}>
-          See how you rank among friends and turn studying into a friendly competition.
-        </p>
-        <Link href="/leaderboards">
-          <button className={styles.button}>View Leaderboards</button>
-        </Link>
-      </AnimatedSection>
-
-      <AnimatedSection backgroundColor="#fce4ec">
-        <h2 style={inlineStyles.heading}>📈 Study Feedback</h2>
-        <p style={inlineStyles.text}>
-          Analyze your study patterns and get insights to improve your learning efficiency.
-        </p>
-        <Link href="/feedback">
-          <button className={styles.button}>Get Feedback</button>
-        </Link>
-      </AnimatedSection>
-    </main>
+        <AnimatedSection backgroundColor="#fce4ec">
+          <h2 style={inlineStyles.heading}>📈 Study Feedback</h2>
+          <p style={inlineStyles.text}>
+            Analyze your study patterns and get insights to improve your learning efficiency.
+          </p>
+          <Link href="/feedback">
+            <button className={styles.button}>Get Feedback</button>
+          </Link>
+        </AnimatedSection>
+      </main>
+    </>
   );
 }
