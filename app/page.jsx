@@ -1,72 +1,16 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
-import styles from './page.module.css';
+import styles from './page.module.css'; // CSS module for button styling
 
-<Link href="/timer">
-  <button className={styles.button}>Start Timing</button>
-</Link>
-
-// Reusable animated section component
-const AnimatedSection = ({ backgroundColor, children }) => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2, // Trigger when 20% of section is visible
-  });
-
-  return (
-    <motion.section
-      ref={ref}
-      style={{ ...styles.section, backgroundColor }}
-      initial={{ opacity: 0, y: 60 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      {children}
-    </motion.section>
-  );
-};
-
-export default function HomePage() {
-  return (
-    <main style={styles.main}>
-      <AnimatedSection backgroundColor="#f0f4ff">
-        <h1 style={styles.title}>📚 OtterlyFocused</h1>
-        <p style={styles.subtitle}>
-          Track your study time. Compete with friends. Improve your habits.
-        </p>
-      </AnimatedSection>
-
-      <AnimatedSection backgroundColor="#e8f5e9">
-        <h2 style={styles.heading}>⏱ Study Timer</h2>
-        <p style={styles.text}>
-          Use our focused timer to manage Pomodoro sessions and stay productive.
-        </p>
-      </AnimatedSection>
-
-      <AnimatedSection backgroundColor="#fff8e1">
-        <h2 style={styles.heading}>🏆 Leaderboards</h2>
-        <p style={styles.text}>
-          See how you rank among friends and turn studying into a friendly competition.
-        </p>
-      </AnimatedSection>
-
-      <AnimatedSection backgroundColor="#fce4ec">
-        <h2 style={styles.heading}>📈 Study Feedback</h2>
-        <p style={styles.text}>
-          Analyze your study patterns and get insights to improve your learning efficiency.
-        </p>
-      </AnimatedSection>
-    </main>
-  );
-}
-
-const styles = {
+const inlineStyles = {
   main: {
     scrollBehavior: 'smooth',
     backgroundColor: '#fefefe',
+    minHeight: '100vh',
   },
   section: {
     height: '100vh',
@@ -79,10 +23,11 @@ const styles = {
   },
   title: {
     fontSize: '4rem',
-    margin: '0',
+    margin: 0,
     fontWeight: '900',
-    color: '#FF6F91',  // soft pink/red
+    color: '#FF6F91',
     textShadow: '3px 3px 6px rgba(255, 111, 145, 0.5)',
+    fontFamily: "'Baloo 2', cursive",
   },
   subtitle: {
     fontSize: '1.5rem',
@@ -107,17 +52,70 @@ const styles = {
     marginBottom: '1.5rem',
     fontFamily: "'Baloo 2', cursive",
   },
-  button: {
-    padding: '0.75rem 1.5rem',
-    fontSize: '1.1rem',
-    backgroundColor: '#FF6F91',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '20px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-    fontWeight: '700',
-    fontFamily: "'Baloo 2', cursive",
-    boxShadow: '0 6px 12px rgba(255, 111, 145, 0.3)',
-  },
 };
+
+// Animated section component using framer-motion and intersection observer
+const AnimatedSection = ({ backgroundColor, children }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  return (
+    <motion.section
+      ref={ref}
+      style={{ ...inlineStyles.section, backgroundColor }}
+      initial={{ opacity: 0, y: 60 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
+export default function HomePage() {
+  return (
+    <main style={inlineStyles.main}>
+      <AnimatedSection backgroundColor="#f0f4ff">
+        <h1 style={inlineStyles.title}>📚 OtterlyFocused</h1>
+        <p style={inlineStyles.subtitle}>
+          Track your study time. Compete with friends. Improve your habits.
+        </p>
+        <Link href="/timer">
+          <button className={styles.button}>Start Timing</button>
+        </Link>
+      </AnimatedSection>
+
+      <AnimatedSection backgroundColor="#e8f5e9">
+        <h2 style={inlineStyles.heading}>⏱ Study Timer</h2>
+        <p style={inlineStyles.text}>
+          Use our focused timer to manage Pomodoro sessions and stay productive.
+        </p>
+        <Link href="/timer">
+          <button className={styles.button}>Go to Timer</button>
+        </Link>
+      </AnimatedSection>
+
+      <AnimatedSection backgroundColor="#fff8e1">
+        <h2 style={inlineStyles.heading}>🏆 Leaderboards</h2>
+        <p style={inlineStyles.text}>
+          See how you rank among friends and turn studying into a friendly competition.
+        </p>
+        <Link href="/leaderboards">
+          <button className={styles.button}>View Leaderboards</button>
+        </Link>
+      </AnimatedSection>
+
+      <AnimatedSection backgroundColor="#fce4ec">
+        <h2 style={inlineStyles.heading}>📈 Study Feedback</h2>
+        <p style={inlineStyles.text}>
+          Analyze your study patterns and get insights to improve your learning efficiency.
+        </p>
+        <Link href="/feedback">
+          <button className={styles.button}>Get Feedback</button>
+        </Link>
+      </AnimatedSection>
+    </main>
+  );
+}
