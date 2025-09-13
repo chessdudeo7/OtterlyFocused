@@ -3,6 +3,12 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
+import styles from './page.module.css';
+
+<Link href="/timer">
+  <button className={styles.button}>Start Timing</button>
+</Link>
+
 // Reusable animated section component
 const AnimatedSection = ({ backgroundColor, children }) => {
   const { ref, inView } = useInView({
@@ -60,6 +66,7 @@ export default function HomePage() {
 const styles = {
   main: {
     scrollBehavior: 'smooth',
+    backgroundColor: '#fefefe',
   },
   section: {
     height: '100vh',
@@ -71,21 +78,46 @@ const styles = {
     textAlign: 'center',
   },
   title: {
-    fontSize: '3rem',
+    fontSize: '4rem',
     margin: '0',
+    fontWeight: '900',
+    color: '#FF6F91',  // soft pink/red
+    textShadow: '3px 3px 6px rgba(255, 111, 145, 0.5)',
   },
   subtitle: {
-    fontSize: '1.25rem',
-    color: '#555',
+    fontSize: '1.5rem',
+    color: '#666',
     maxWidth: '600px',
+    fontWeight: '600',
+    marginTop: '0.5rem',
+    fontFamily: "'Baloo 2', cursive",
   },
   heading: {
-    fontSize: '2.25rem',
+    fontSize: '2.75rem',
     marginBottom: '1rem',
+    fontWeight: '700',
+    color: '#FF6F91',
+    fontFamily: "'Baloo 2', cursive",
+    textShadow: '2px 2px 4px rgba(255, 111, 145, 0.3)',
   },
   text: {
-    fontSize: '1.1rem',
+    fontSize: '1.2rem',
     maxWidth: '600px',
     color: '#444',
+    marginBottom: '1.5rem',
+    fontFamily: "'Baloo 2', cursive",
+  },
+  button: {
+    padding: '0.75rem 1.5rem',
+    fontSize: '1.1rem',
+    backgroundColor: '#FF6F91',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '20px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    fontWeight: '700',
+    fontFamily: "'Baloo 2', cursive",
+    boxShadow: '0 6px 12px rgba(255, 111, 145, 0.3)',
   },
 };

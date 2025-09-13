@@ -1,0 +1,18 @@
+/* app/page.module.css */
+.button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  background-color: #FF6F91;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 700;
+  font-family: 'Baloo 2', cursive;
+  box-shadow: 0 6px 12px rgba(255, 111, 145, 0.3);
+}
+
+.button:hover {
+  background-color: #FF4B75;
+}
