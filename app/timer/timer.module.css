@@ -98,3 +98,28 @@
 .button:hover {
   background-color: #ff4b75;
 }
+
+.inlineInputs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: monospace;
+  font-size: 2rem;
+}
+
+.inlineInput {
+  width: 50px;
+  font-size: 2rem;
+  text-align: center;
+  padding: 0.2rem;
+  border: 2px solid #ff6f91;
+  border-radius: 6px;
+  color: #333;
+  background-color: #fff0f3;
+  font-family: monospace;
+}
+
+.inlineInput:focus {
+  outline: none;
+  border-color: #ff4b75;
+}
