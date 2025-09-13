@@ -1,73 +1,142 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './timer.module.css';
 
 export default function TimerPage() {
   const [mode, setMode] = useState('stopwatch');
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [inputTime, setInputTime] = useState({ hours: '', minutes: '', seconds: '' });
+
+  // Track inputs as strings to allow direct editing with leading zeros
+  const [hours, setHours] = useState('00');
+  const [minutes, setMinutes] = useState('00');
+  const [seconds, setSeconds] = useState('00');
 
   const intervalRef = useRef(null);
 
-  const formatTime = (totalSeconds) => {
-    const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
-    const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
-    const secs = String(totalSeconds % 60).padStart(2, '0');
-    return `${hrs}:${mins}:${secs}`;
+  // Helper: convert h/m/s strings to total seconds
+  const getTotalSeconds = () => {
+    const h = parseInt(hours, 10) || 0;
+    const m = parseInt(minutes, 10) || 0;
+    const s = parseInt(seconds, 10) || 0;
+    return h * 3600 + m * 60 + s;
   };
 
+  // Helper: format seconds to HH MM SS strings (with leading zeros)
+  const formatTimeParts = (totalSeconds) => {
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    return {
+      h: String(h).padStart(2, '0'),
+      m: String(m).padStart(2, '0'),
+      s: String(s).padStart(2, '0'),
+    };
+  };
+
+  // Start timer or stopwatch
   const start = () => {
     if (isRunning) return;
 
     if (mode === 'timer') {
-      if (isEditing) {
-        const h = parseInt(inputTime.hours || '0', 10);
-        const m = parseInt(inputTime.minutes || '0', 10);
-        const s = parseInt(inputTime.seconds || '0', 10);
-        const total = h * 3600 + m * 60 + s;
-        if (isNaN(total) || total <= 0) return alert('Enter valid time');
-        setTime(total);
-        setIsEditing(false);
+      const total = getTotalSeconds();
+      if (total <= 0) {
+        alert('Please enter a valid time greater than 0');
+        return;
       }
+      setTime(total);
     }
 
     setIsRunning(true);
-    intervalRef.current = setInterval(() => {
-      setTime((prev) => {
-        if (mode === 'timer') {
-          if (prev <= 1) {
-            clearInterval(intervalRef.current);
-            setIsRunning(false);
-            return 0;
-          }
-          return prev - 1;
-        } else {
-          return prev + 1;
-        }
-      });
-    }, 1000);
   };
 
+  // Stop the timer/stopwatch
   const stop = () => {
     clearInterval(intervalRef.current);
     setIsRunning(false);
   };
 
+  // Reset timer/stopwatch
   const reset = () => {
     stop();
-    setTime(0);
-    setInputTime({ hours: '', minutes: '', seconds: '' });
-    setIsEditing(mode === 'timer');
+    if (mode === 'stopwatch') {
+      setTime(0);
+      setHours('00');
+      setMinutes('00');
+      setSeconds('00');
+    } else {
+      // Reset to last input time for timer mode
+      const total = getTotalSeconds();
+      setTime(total);
+    }
   };
 
+  // Mode change handler
   const handleModeChange = (newMode) => {
     reset();
     setMode(newMode);
-    setIsEditing(newMode === 'timer');
+    if (newMode === 'stopwatch') {
+      setHours('00');
+      setMinutes('00');
+      setSeconds('00');
+      setTime(0);
+    }
   };
+
+  // Effect: run timer or stopwatch interval
+  useEffect(() => {
+    if (!isRunning) {
+      clearInterval(intervalRef.current);
+      return;
+    }
+
+    intervalRef.current = setInterval(() => {
+      setTime((prevTime) => {
+        if (mode === 'stopwatch') {
+          const newTime = prevTime + 1;
+          const { h, m, s } = formatTimeParts(newTime);
+          setHours(h);
+          setMinutes(m);
+          setSeconds(s);
+          return newTime;
+        } else {
+          // Timer counts down
+          if (prevTime <= 0) {
+            clearInterval(intervalRef.current);
+            setIsRunning(false);
+            return 0;
+          }
+          const newTime = prevTime - 1;
+          const { h, m, s } = formatTimeParts(newTime);
+          setHours(h);
+          setMinutes(m);
+          setSeconds(s);
+          return newTime;
+        }
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalRef.current);
+  }, [isRunning, mode]);
+
+  // When inputs change (only for timer mode and if not running), update time state
+  useEffect(() => {
+    if (mode === 'timer' && !isRunning) {
+      setTime(getTotalSeconds());
+    }
+  }, [hours, minutes, seconds, mode, isRunning]);
+
+  // Input change handler: accept only digits, max 2 chars
+  const handleInputChange = (setter) => (e) => {
+    let val = e.target.value;
+    val = val.replace(/\D/g, ''); // Remove non-digit
+    if (val.length > 2) val = val.slice(0, 2);
+    setter(val);
+  };
+
+  // Disable inputs in stopwatch mode or when running
+  const inputsDisabled = mode === 'stopwatch' || isRunning;
 
   return (
     <main className={styles.timerPage}>
@@ -88,43 +157,52 @@ export default function TimerPage() {
         </button>
       </div>
 
-      {/* Editable display for timer */}
-      <div className={styles.timeDisplay} onClick={() => mode === 'timer' && !isRunning && setIsEditing(true)}>
-        {mode === 'timer' && isEditing ? (
-          <div className={styles.inlineInputs}>
-            <input
-              className={styles.inlineInput}
-              type="number"
-              placeholder="HH"
-              value={inputTime.hours}
-              onChange={(e) => setInputTime({ ...inputTime, hours: e.target.value })}
-            />
-            :
-            <input
-              className={styles.inlineInput}
-              type="number"
-              placeholder="MM"
-              value={inputTime.minutes}
-              onChange={(e) => setInputTime({ ...inputTime, minutes: e.target.value })}
-            />
-            :
-            <input
-              className={styles.inlineInput}
-              type="number"
-              placeholder="SS"
-              value={inputTime.seconds}
-              onChange={(e) => setInputTime({ ...inputTime, seconds: e.target.value })}
-            />
-          </div>
-        ) : (
-          <span>{formatTime(time)}</span>
-        )}
+      {/* Editable inline inputs for time */}
+      <div className={styles.timeDisplay}>
+        <input
+          className={styles.inlineInput}
+          type="text"
+          maxLength={2}
+          value={hours}
+          onChange={handleInputChange(setHours)}
+          disabled={inputsDisabled}
+          aria-label="Hours"
+        />
+        <span>:</span>
+        <input
+          className={styles.inlineInput}
+          type="text"
+          maxLength={2}
+          value={minutes}
+          onChange={handleInputChange(setMinutes)}
+          disabled={inputsDisabled}
+          aria-label="Minutes"
+        />
+        <span>:</span>
+        <input
+          className={styles.inlineInput}
+          type="text"
+          maxLength={2}
+          value={seconds}
+          onChange={handleInputChange(setSeconds)}
+          disabled={inputsDisabled}
+          aria-label="Seconds"
+        />
       </div>
 
       <div className={styles.controls}>
-        <button className={styles.button} onClick={start}>Start</button>
-        <button className={styles.button} onClick={stop}>Stop</button>
-        <button className={styles.button} onClick={reset}>Reset</button>
+        {!isRunning ? (
+          <button className={styles.button} onClick={start}>
+            Start
+          </button>
+        ) : (
+          <button className={styles.button} onClick={stop}>
+            Stop
+          </button>
+        )}
+        <button className={styles.button} onClick={reset}>
+          Reset
+        </button>
       </div>
     </main>
   );
