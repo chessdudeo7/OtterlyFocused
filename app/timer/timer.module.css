@@ -1,0 +1,125 @@
+.timerPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background: #fef9f9;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #222;
+  font-family: 'Baloo 2', cursive;
+}
+
+/* Mode Toggle */
+.modeToggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.modeButton {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ff6f91;
+  border-radius: 10px;
+  background: transparent;
+  color: #ff6f91;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Baloo 2', cursive;
+}
+
+.modeButton:hover {
+  background-color: #ff6f91;
+  color: white;
+}
+
+.active {
+  background-color: #ff6f91;
+  color: white;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.timeInput {
+  width: 60px;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 0.5rem;
+  border: 2px solid #ff6f91;
+  border-radius: 8px;
+  font-family: monospace;
+  color: #333;
+}
+
+.colon {
+  font-size: 2rem;
+  margin: 0 0.5rem;
+  color: #555;
+}
+
+.timeDisplay {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  font-family: monospace;
+  color: #ff6f91;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  background-color: #ff6f91;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 700;
+  font-family: 'Baloo 2', cursive;
+  box-shadow: 0 6px 12px rgba(255, 111, 145, 0.3);
+}
+
+.button:hover {
+  background-color: #ff4b75;
+}
+
+.inlineInputs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: monospace;
+  font-size: 2rem;
+}
+
+.inlineInput {
+  width: 50px;
+  font-size: 2rem;
+  text-align: center;
+  padding: 0.2rem;
+  border: 2px solid #ff6f91;
+  border-radius: 6px;
+  color: #333;
+  background-color: #fff0f3;
+  font-family: monospace;
+}
+
+.inlineInput:focus {
+  outline: none;
+  border-color: #ff4b75;
+}
