@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-
 import styles from './page.module.css'; // CSS module for button styling
+import Navbar from '../components/navbar'; // <-- Import Navbar here
 
 const inlineStyles = {
   main: {
@@ -77,6 +77,8 @@ const AnimatedSection = ({ backgroundColor, children }) => {
 export default function HomePage() {
   return (
     <main style={inlineStyles.main}>
+      <Navbar />  {/* <-- Added Navbar here */}
+
       <AnimatedSection backgroundColor="#f0f4ff">
         <h1 style={inlineStyles.title}>📚 OtterlyFocused</h1>
         <p style={inlineStyles.subtitle}>
