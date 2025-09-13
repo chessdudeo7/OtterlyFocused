@@ -11,7 +11,7 @@ export default function Navbar() {
       backgroundColor: '#fff',
       boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
     }}>
-      <Link href="/apps/signup" style={{ 
+      <Link href="/app/signup" style={{ 
         fontWeight: '600', 
         color: '#FF6F91', 
         textDecoration: 'none',
