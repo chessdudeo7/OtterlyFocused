@@ -3,55 +3,51 @@
 export default function HomePage() {
   return (
     <main style={styles.main}>
-      <header style={styles.header}>
+      <section style={{ ...styles.section, backgroundColor: '#f0f4ff' }}>
         <h1 style={styles.title}>📚 OtterlyFocused</h1>
         <p style={styles.subtitle}>
           Track your study time. Compete with friends. Improve your habits.
         </p>
-      </header>
-
-      <section style={styles.features}>
-        <Feature
-          title="⏱ Study Timer"
-          description="Stay on track with focused study sessions and clear goals."
-        />
-        <Feature
-          title="🏆 Leaderboards"
-          description="Challenge your friends and climb the rankings together."
-        />
-        <Feature
-          title="📈 Study Feedback"
-          description="Review your productivity trends and make smarter plans."
-        />
       </section>
 
-      <section style={styles.actions}>
-        <button style={styles.button}>Sign Up</button>
-        <button style={{ ...styles.button, backgroundColor: '#555' }}>Log In</button>
+      <section style={{ ...styles.section, backgroundColor: '#e8f5e9' }}>
+        <h2 style={styles.heading}>⏱ Study Timer</h2>
+        <p style={styles.text}>
+          Stay on track with focused study sessions and custom goals. Use the built-in timer to
+          structure your work and break periods effectively.
+        </p>
+      </section>
+
+      <section style={{ ...styles.section, backgroundColor: '#fff8e1' }}>
+        <h2 style={styles.heading}>🏆 Leaderboards</h2>
+        <p style={styles.text}>
+          Challenge your friends, climb the leaderboard, and make studying competitive and fun.
+        </p>
+      </section>
+
+      <section style={{ ...styles.section, backgroundColor: '#fce4ec' }}>
+        <h2 style={styles.heading}>📈 Study Feedback</h2>
+        <p style={styles.text}>
+          Get insights into your productivity trends. See when you're most focused and receive
+          suggestions for improving your study habits.
+        </p>
       </section>
     </main>
   );
 }
 
-function Feature({ title, description }) {
-  return (
-    <div style={styles.featureCard}>
-      <h2>{title}</h2>
-      <p>{description}</p>
-    </div>
-  );
-}
-
 const styles = {
   main: {
-    maxWidth: '900px',
-    margin: '0 auto',
-    padding: '2rem',
-    fontFamily: 'sans-serif',
-    textAlign: 'center',
+    scrollBehavior: 'smooth',
   },
-  header: {
-    marginBottom: '2rem',
+  section: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '2rem',
+    textAlign: 'center',
   },
   title: {
     fontSize: '3rem',
@@ -60,35 +56,15 @@ const styles = {
   subtitle: {
     fontSize: '1.25rem',
     color: '#555',
+    maxWidth: '600px',
   },
-  features: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    gap: '1.5rem',
-    marginTop: '2rem',
-    marginBottom: '3rem',
+  heading: {
+    fontSize: '2.25rem',
+    marginBottom: '1rem',
   },
-  featureCard: {
-    flex: '1 1 250px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    padding: '1rem',
-    backgroundColor: '#f9f9f9',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '1rem',
-  },
-  button: {
-    padding: '0.75rem 2rem',
-    fontSize: '1rem',
-    border: 'none',
-    borderRadius: '6px',
-    backgroundColor: '#0070f3',
-    color: '#fff',
-    cursor: 'pointer',
+  text: {
+    fontSize: '1.1rem',
+    maxWidth: '600px',
+    color: '#444',
   },
 };
