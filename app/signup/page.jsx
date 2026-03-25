@@ -40,7 +40,7 @@ export default function SignUpPage() {
   return (
     <main className={styles.container}>
       <div className={styles.card}>
-        <h1 className={styles.title}>Join the Raft!</h1>
+        <h1 className={styles.title}>Join the Study Group!</h1>
         <p style={{ color: '#666', marginBottom: '1.5rem' }}>Start tracking your focus today.</p>
         
         {error && <p className={styles.error}>{error}</p>}
