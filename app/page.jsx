@@ -103,7 +103,7 @@ export default function HomePage() {
           <p style={inlineStyles.text}>
             See how you rank among friends and turn studying into a friendly competition.
           </p>
-          <Link href="/leaderboards">
+          <Link href="/leaderboard">
             <button className={styles.button}>View Leaderboards</button>
           </Link>
         </AnimatedSection>
@@ -115,6 +115,16 @@ export default function HomePage() {
           </p>
           <Link href="/feedback">
             <button className={styles.button}>Get Feedback</button>
+          </Link>
+        </AnimatedSection>
+
+        <AnimatedSection backgroundColor="#f3e5f5">
+          <h2 style={inlineStyles.heading}>🦦 Join the Raft</h2>
+          <p style={inlineStyles.text}>
+            Create an account to save your progress and compete on the leaderboards!
+          </p>
+          <Link href="/signup">
+            <button className={styles.button}>Sign Up Now</button>
           </Link>
         </AnimatedSection>
       </main>
