@@ -6,7 +6,9 @@ import { supabase } from '../supabaseClient';
 
 export default function SignUpPage() {
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false); // Good for UX
+  const [loading, setLoading] = useState(false);
+
+  console.log("Supabase URL loaded:", process.env.NEXT_PUBLIC_SUPABASE_URL ? "YES" : "NO");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
