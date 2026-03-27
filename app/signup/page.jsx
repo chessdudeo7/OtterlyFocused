@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './signup.module.css';
-import { supabase } from '../../src/supabaseClient';
+import { supabase } from '@/src/supabaseClient';
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +46,7 @@ export default function SignUpPage() {
       setLoading(false);
     } else {
       alert('Success! Check your email for a confirmation link.');
-      window.location.href = '/signin';
+      router.push('/signin');
     }
   };
 
