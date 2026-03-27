@@ -2,17 +2,15 @@
 
 import { useState } from 'react';
 import styles from './signup.module.css';
-import { supabase } from '../supabaseClient'; 
+import { supabase } from '../../src/supabaseClient';
 
 export default function SignUpPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  console.log("Supabase URL loaded:", process.env.NEXT_PUBLIC_SUPABASE_URL ? "YES" : "NO");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("ALIVE: This is the code from VS Code!");
     setError('');
     setLoading(true);
 
