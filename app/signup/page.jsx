@@ -12,6 +12,7 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    alert("ALIVE: This is the code from VS Code!");
     setError('');
     setLoading(true);
 
