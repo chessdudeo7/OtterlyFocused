@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 import styles from './signup.module.css';
+import { supabase } from '../supabaseClient'; 
 
 export default function SignUpPage() {
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // Good for UX
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email');
@@ -16,24 +19,28 @@ export default function SignUpPage() {
     const password = formData.get('password');
     const confirmPassword = formData.get('confirmPassword');
 
-    // Simple validation: check if passwords match
     if (password !== confirmPassword) {
       setError("Passwords don't match!");
+      setLoading(false);
       return;
     }
 
-    const res = await fetch('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, username, password }),
+    const { data, error: sbError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          display_name: username,
+        },
+      },
     });
 
-    const result = await res.json();
-
-    if (res.ok) {
-      window.location.href = '/signin';
+    if (sbError) {
+      setError(sbError.message);
+      setLoading(false);
     } else {
-      setError(result.error || 'Something went wrong. Try again!');
+      alert('Success! Check your email for a confirmation link.');
+      window.location.href = '/signin';
     }
   };
 
@@ -75,8 +82,8 @@ export default function SignUpPage() {
             required
           />
           
-          <button type="submit" className={styles.button}>
-            Create Account
+          <button type="submit" className={styles.button} disabled={loading}>
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
