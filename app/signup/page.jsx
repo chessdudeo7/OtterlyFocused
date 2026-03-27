@@ -36,6 +36,9 @@ export default function SignUpPage() {
       },
     });
 
+    console.log("Supabase Data:", data);
+    console.log("Supabase Error:", sbError);
+
     if (sbError) {
       setError(sbError.message);
       setLoading(false);
