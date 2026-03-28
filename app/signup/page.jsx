@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './signup.module.css';
-import { supabase } from '@/src/supabaseClient';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -27,24 +26,25 @@ export default function SignUpPage() {
       return;
     }
 
-    const { data, error: sbError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          display_name: username,
-        },
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        email,
+        password,
+        username,
+      }),
     });
 
-    console.log('Supabase Data:', data);
-    console.log('Supabase Error:', sbError);
+    const result = await response.json();
 
-    if (sbError) {
-      setError(sbError.message);
+    if (!response.ok) {
+      setError(result.error || 'Unable to create account. Please try again.');
       setLoading(false);
     } else {
-      alert('Success! Check your email for a confirmation link.');
+      alert('Success! Your account has been created.');
       router.push('/signin');
     }
   };
