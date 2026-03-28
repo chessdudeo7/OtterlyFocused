@@ -11,12 +11,15 @@ export async function POST(request) {
       );
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!supabaseUrl || !serviceRoleKey) {
+      const missing = [];
+      if (!supabaseUrl) missing.push('SUPABASE_URL or NEXT_PUBLIC_SUPABASE_URL');
+      if (!serviceRoleKey) missing.push('SUPABASE_SERVICE_ROLE_KEY');
       return Response.json(
-        { error: 'Server is missing Supabase configuration.' },
+        { error: `Server is missing Supabase configuration: ${missing.join(', ')}` },
         { status: 500 },
       );
     }
