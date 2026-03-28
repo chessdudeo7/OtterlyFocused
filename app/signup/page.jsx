@@ -10,7 +10,6 @@ export default function SignUpPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -38,8 +37,8 @@ export default function SignUpPage() {
       },
     });
 
-    console.log("Supabase Data:", data);
-    console.log("Supabase Error:", sbError);
+    console.log('Supabase Data:', data);
+    console.log('Supabase Error:', sbError);
 
     if (sbError) {
       setError(sbError.message);
@@ -55,7 +54,7 @@ export default function SignUpPage() {
       <div className={styles.card}>
         <h1 className={styles.title}>Join the Study Group!</h1>
         <p style={{ color: '#666', marginBottom: '1.5rem' }}>Start tracking your focus today.</p>
-        
+
         {error && <p className={styles.error}>{error}</p>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -87,7 +86,7 @@ export default function SignUpPage() {
             placeholder="Confirm Password"
             required
           />
-          
+
           <button type="submit" className={styles.button} disabled={loading}>
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
